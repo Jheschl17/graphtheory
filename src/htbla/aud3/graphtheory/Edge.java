@@ -15,11 +15,11 @@ public class Edge {
         this.weight=weight;
     }
     public int getFromNodeId() {
-        return -1;
+        return from.id;
     }
     
     public int getToNodeId() {
-        return -1;
+        return to.id;
     }
     
 }

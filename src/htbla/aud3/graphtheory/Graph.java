@@ -12,6 +12,7 @@ import java.util.Scanner;
 public class Graph {
     public class Node
     {
+        protected int id;
         protected String name;
         protected List<Edge> connections;
         public Node(String name, List<Edge> connections)
