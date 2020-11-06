@@ -1,64 +1,32 @@
 package htbla.aud3.graphtheory;
 
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * @author Jonas Heschl, Jakob Jodlbauer, Emil Eichsteininger
  */
 public class Graph {
-    public class Node
-    {
-        protected int id;
-        protected String name;
-        protected List<Edge> connections;
-        public Node(String name, List<Edge> connections)
-        {
-            this.name=name;
-            this.connections=connections;
-        }
-        public void setConnections(List<Edge> connections)
-        {
-            this.connections = connections;
-        }
-    }
-    Node[] nodes = new Node[50];
+
+    List<Edge> edges = new ArrayList<>();
+
     public void read(File adjacencyMatrix) {
-        Scanner s = null;
         try {
-            s = new Scanner(adjacencyMatrix);
-        } catch (Exception e) {}
-        s.useDelimiter("\n");
-        int rep = 0;
-        for (int i = 0; i < 50; i++) {
-            String name = "";
-            for (int j = rep; j < rep+1; j++) {
-                if(i>25)
-                {
-                    char c = (char) (40+i-1);
-                    name ="A"+c;
+            List<String> lines = Files.readAllLines(adjacencyMatrix.toPath());
+            for (int lineIndex = 0; lineIndex < lines.size(); lineIndex++) {
+                for (int weightIndex = 0; weightIndex < lines.get(lineIndex).split(";").length; weightIndex++) {
+                    int weight = Integer.parseInt(lines.get(lineIndex).split(";")[weightIndex]);
+                    if (weight != 0) {
+                        Edge edge = new Edge(lineIndex, weightIndex, weight);
+                        edges.add(edge);
+                    }
                 }
-                else
-                {
-                    char c = (char)(i+65);
-                    name = ""+c;
-                }
-                rep=(i/25);
             }
-            Node n = new Node(name, null);
-            nodes[i]=n;
-        }
-       /* while(s.hasNext())
-        {
-            String line = s.nextLine();
-            String[] parts = line.split(";");
-            List<Edge> edges = new ArrayList<>();
-        }*/
-        for (int i = 0; i < nodes.length; i++) {
-            System.out.println(nodes[i].name);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
     

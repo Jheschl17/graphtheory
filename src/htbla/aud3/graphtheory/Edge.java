@@ -5,21 +5,22 @@ package htbla.aud3.graphtheory;
  */
 public class Edge {
 
-    private Graph.Node from;
-    private Graph.Node to;
+    private int from;
+    private int to;
     private int weight;
-    public Edge(Graph.Node from, Graph.Node to, int weight)
-    {
-        this.from=from;
+
+    public Edge(int from, int to, int weight) {
+        this.from = from;
         this.to = to;
-        this.weight=weight;
+        this.weight = weight;
     }
+
     public int getFromNodeId() {
-        return from.id;
+        return from;
     }
     
     public int getToNodeId() {
-        return to.id;
+        return to;
     }
     
 }
