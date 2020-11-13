@@ -46,4 +46,13 @@ public class Graph {
         return null;
     }
 
+    public int weight(int idFrom, int idTo) {
+        return edges.stream()
+                .filter(edge -> edge.getFromNodeId() == idFrom && edge.getToNodeId() == idTo)
+                .findFirst()
+                .orElseThrow(
+                        () -> new IllegalArgumentException("No edge exists with idFrom=" + idFrom + " and idTo=" + idTo))
+                .getWeight();
+    }
+
 }

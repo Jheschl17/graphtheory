@@ -22,5 +22,9 @@ public class Edge {
     public int getToNodeId() {
         return to;
     }
+
+    public int getWeight() {
+        return weight;
+    }
     
 }
