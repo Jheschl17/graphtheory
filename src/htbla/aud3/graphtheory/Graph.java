@@ -3,8 +3,9 @@ package htbla.aud3.graphtheory;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * @author Jonas Heschl, Jakob Jodlbauer, Emil Eichsteininger
@@ -53,6 +54,22 @@ public class Graph {
                 .orElseThrow(
                         () -> new IllegalArgumentException("No edge exists with idFrom=" + idFrom + " and idTo=" + idTo))
                 .getWeight();
+    }
+
+    /**
+     *
+     * @return All node ids in this graph.
+     */
+    public List<Integer> allNodeIds() {
+        return edges.stream()
+                .map(edge -> new ArrayList<>(Arrays.asList(
+                        edge.getFromNodeId(),
+                        edge.getToNodeId()
+                )))
+                .flatMapToInt(list -> (IntStream) list.stream())
+                .distinct()
+                .boxed()
+                .collect(Collectors.toList());
     }
 
 }
