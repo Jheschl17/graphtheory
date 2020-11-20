@@ -5,6 +5,7 @@ import org.junit.*;
 import java.io.File;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 public class GraphTest {
 
@@ -32,16 +33,31 @@ public class GraphTest {
     }
 
     @Test
-    public void testDetermineShortestPathZero() {
-        Path expResult = new Path();
-        Path result = graph.determineShortestPath(0, 13);
-        assertEquals(expResult, result);
+    public void testDetermineShortestPathEasy() {
+        Path expResult = new Path(graph, 0, 1);
+        Path result = graph.determineShortestPath(0, 1);
+        Assert.assertArrayEquals(expResult.getNodeIds(), result.getNodeIds());
     }
 
     @Test
     public void testDetermineShortestPathExists() {
-        Path expResult = new Path();
+        Path expResult = new Path(graph, 0, 1);
         Path result = graph.determineShortestPath(0, 1);
-        assertEquals(expResult, result);
+        Assert.assertArrayEquals(expResult.getNodeIds(), result.getNodeIds());
     }
+
+    @Test
+    public void testDetermineShortestPathNegativeId() {
+        Path result = graph.determineShortestPath(0, -10);
+        assertNull(result);
+    }
+
+    @Test
+    public void testDetermineShortestPathExistsWithParams() {
+        Path expResult = new Path(graph, 0, 1);
+        Path result = graph.determineShortestPath(2,0);
+        Assert.assertArrayEquals(expResult.getNodeIds(), result.getNodeIds());
+    }
+
+
 }
