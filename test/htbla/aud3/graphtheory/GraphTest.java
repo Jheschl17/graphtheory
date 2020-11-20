@@ -16,7 +16,7 @@ public class GraphTest {
     @BeforeClass
     public static void setUpClass() {
         graph = new Graph();
-        graph.read(new File("Suchproblem.csv"));
+        graph.read(new File("Linz_Suchproblem.csv"));
     }
 
     @AfterClass
@@ -33,15 +33,15 @@ public class GraphTest {
 
     @Test
     public void testDetermineShortestPathZero() {
-        Path expResult = null;
+        Path expResult = new Path();
         Path result = graph.determineShortestPath(0, 13);
         assertEquals(expResult, result);
     }
 
     @Test
     public void testDetermineShortestPathExists() {
-        Path expResult = null;
-        Path result = graph.determineShortestPath(0, 13);
+        Path expResult = new Path();
+        Path result = graph.determineShortestPath(0, 1);
         assertEquals(expResult, result);
     }
 }
