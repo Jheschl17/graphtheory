@@ -3,6 +3,8 @@ package htbla.aud3.graphtheory;
 import org.junit.*;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -47,13 +49,13 @@ public class GraphTest {
     @Test
     public void testDetermineShortestPathWithParamsExists() {
         Path expResult = new Path(graph, 0, 1);
-        Path result = graph.determineShortestPath(2,0);
+        Path result = graph.determineShortestPath(2,0, 1);
         Assert.assertArrayEquals(expResult.getNodeIds(), result.getNodeIds());
     }
 
     @Test
     public void testDetermineShortestPathWithParamsNegativeId() {
-        Path result = graph.determineShortestPath(2,-187);
+        Path result = graph.determineShortestPath(2,-187, 420);
         assertNull(result);
     }
 
@@ -64,5 +66,20 @@ public class GraphTest {
         } catch (Exception e) {
             fail();
         }
+    }
+
+    @Test
+    public void testDetermineMaximumFlow() {
+        double expResult = 2000;
+        double result = graph.determineMaximumFlow(0,2);
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    public void testDetermineBottlenecks() {
+        List<Edge> expResult = new ArrayList<>();
+        expResult.add(new Edge(1, 2, 0));
+        List<Edge> result = graph.determineBottlenecks(0,2);
+        assertArrayEquals(expResult.toArray(), result.toArray());
     }
 }
