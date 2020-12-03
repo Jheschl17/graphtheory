@@ -3,10 +3,7 @@ package htbla.aud3.graphtheory;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -46,13 +43,17 @@ public class Graph {
         IntStream.range(0, list.size()).filter(i -> list.get(i) == list.get(i + 1)).forEach(list::remove);
         return new Path(this, list.stream().mapToInt(i->i).toArray());
     }
-    
+    //Annahme: Maximumflow ist die Edge mit der größten Gewichtung
     public double determineMaximumFlow(int sourceNodeId, int targetNodeId) {
-        return -1.0;
+        List<Edge> edgeList=determineShortestPath(sourceNodeId, targetNodeId).getEdges();
+        edgeList.sort(Comparator.comparingInt(Edge::getWeight));
+        return edgeList.get(0).getWeight();
     }
-    
+    //Annahme: Das sind alle Edges die eine kleinere Gewichtung haben als maximum
     public List<Edge> determineBottlenecks(int sourceNodeId, int targetNodeId) {
-        return null;
+        List<Edge> edgeList=determineShortestPath(sourceNodeId, targetNodeId).getEdges();
+        edgeList.sort(Comparator.comparingInt(Edge::getWeight));
+        return edgeList.stream().filter(x -> x.getWeight()<determineMaximumFlow(sourceNodeId, targetNodeId)).collect(Collectors.toList());
     }
 
     public int weight(int idFrom, int idTo) {
