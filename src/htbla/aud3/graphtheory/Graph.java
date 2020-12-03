@@ -4,7 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * @author Jonas Heschl, Jakob Jodlbauer, Emil Eichsteininger
@@ -31,11 +35,16 @@ public class Graph {
     }
     
     public Path determineShortestPath(int sourceNodeId, int targetNodeId) {
+
         return null;
     }
     
     public Path determineShortestPath(int sourceNodeId, int targetNodeId, int... viaNodeIds) {
-        return null;
+        List<Integer> list=(Arrays.stream(determineShortestPath(sourceNodeId, viaNodeIds[0]).getNodeIds()).boxed().collect(Collectors.toList()));
+        if(viaNodeIds.length>1) IntStream.range(0, viaNodeIds.length - 1).mapToObj(i -> Arrays.stream(determineShortestPath(viaNodeIds[i], viaNodeIds[i + 1]).getNodeIds()).boxed().collect(Collectors.toList())).forEach(list::addAll);
+        list.addAll(Arrays.stream(determineShortestPath(viaNodeIds[viaNodeIds.length-1],targetNodeId).getNodeIds()).boxed().collect(Collectors.toList()));
+        IntStream.range(0, list.size()).filter(i -> list.get(i) == list.get(i + 1)).forEach(list::remove);
+        return new Path(this, list.stream().mapToInt(i->i).toArray());
     }
     
     public double determineMaximumFlow(int sourceNodeId, int targetNodeId) {
