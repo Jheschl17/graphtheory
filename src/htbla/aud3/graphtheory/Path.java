@@ -30,15 +30,17 @@ public class Path {
 
         return totalDistance;
     }
-    public List<Edge> getEdges()
-    {
+
+    public List<Edge> getEdges() {
         List<Edge> toReturn = new ArrayList<>();
         for (int i = 0; i < nodeIds.length-1; i++) {
             int from = nodeIds[i];
             int to = nodeIds[i+1];
-            for (Edge e:graph.edges)
-            {
-                if(e.getFromNodeId()==from&&e.getToNodeId()==to) toReturn.add(e); break;
+            for (Edge e : graph.edges) {
+                if(e.getFromNodeId() == from && e.getToNodeId() == to) {
+                    toReturn.add(e);
+                    break;
+                }
             }
         }
         return toReturn;
