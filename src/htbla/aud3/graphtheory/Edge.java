@@ -1,7 +1,7 @@
 package htbla.aud3.graphtheory;
 
 /*
- * @author TODO Bitte Gruppenmitglieder eintragen!
+ * @author Jonas Heschl, Jakob Jodlbauer, Emil Maximilian Hoani Eichsteininger
  */
 public class Edge {
 

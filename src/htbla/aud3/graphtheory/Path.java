@@ -1,7 +1,9 @@
 package htbla.aud3.graphtheory;
 
+import java.util.Arrays;
+
 /**
- * @author TODO Bitte Gruppenmitglieder eintragen!
+ * @author Jonas Heschl, Jakob Jodlbauer, Emil Maximilian Hoani Eichsteininger
  */
 public class Path {
 
@@ -26,4 +28,11 @@ public class Path {
         return totalDistance;
     }
 
+    @Override
+    public String toString() {
+        return "Path{" +
+                "graph=" + graph +
+                ", nodeIds=" + Arrays.toString(nodeIds) +
+                '}';
+    }
 }
