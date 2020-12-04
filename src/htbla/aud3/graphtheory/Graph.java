@@ -167,16 +167,21 @@ public class Graph {
 
     //Annahme: Maximumflow ist die Edge mit der größten Gewichtung
     public double determineMaximumFlow(int sourceNodeId, int targetNodeId) {
-        List<Edge> edgeList = determineShortestPath(sourceNodeId, targetNodeId).getEdges();
-        edgeList.sort(Comparator.comparingInt(Edge::getWeight));
-        return edgeList.get(0).getWeight();
+        return determineShortestPath(sourceNodeId, targetNodeId)
+                .getEdges()
+                .stream()
+                .sorted(Comparator.comparingInt(Edge::getWeight).reversed())
+                .collect(Collectors.toList())
+                .get(0)
+                .getWeight();
     }
 
     //Annahme: Das sind alle Edges die eine kleinere Gewichtung haben als maximum
     public List<Edge> determineBottlenecks(int sourceNodeId, int targetNodeId) {
         List<Edge> edgeList = determineShortestPath(sourceNodeId, targetNodeId).getEdges();
-        edgeList.sort(Comparator.comparingInt(Edge::getWeight));
-        return edgeList.stream().filter(x -> x.getWeight()<determineMaximumFlow(sourceNodeId, targetNodeId)).collect(Collectors.toList());
+        return edgeList.stream()
+                .filter(x -> x.getWeight() < determineMaximumFlow(sourceNodeId, targetNodeId))
+                .collect(Collectors.toList());
     }
 
     public int weight(int idFrom, int idTo) {
