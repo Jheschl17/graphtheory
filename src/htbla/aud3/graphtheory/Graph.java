@@ -84,6 +84,7 @@ public class Graph {
                 if (alt < si.distance) {
                     si.distance = alt;
                     si.via = cur.id;
+                    // Update priority queue
                     pq.remove(si);
                     pq.add(si);
                 }
