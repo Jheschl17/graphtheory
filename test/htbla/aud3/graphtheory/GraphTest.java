@@ -18,7 +18,7 @@ public class GraphTest {
     @BeforeClass
     public static void setUpClass() {
         graph = new Graph();
-        graph.read(new File("Linz_Suchproblem.csv"));
+        graph.read(new File("resources/Linz_Suchproblem.csv"));
     }
 
     @AfterClass
@@ -40,23 +40,21 @@ public class GraphTest {
         Assert.assertArrayEquals(expResult.getNodeIds(), result.getNodeIds());
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void testDetermineShortestPathNegativeId() {
         Path result = graph.determineShortestPath(0, -69);
-        assertNull(result);
     }
 
     @Test
     public void testDetermineShortestPathWithParamsExists() {
-        Path expResult = new Path(graph, 0, 1);
+        Path expResult = new Path(graph, 2, 1, 0);
         Path result = graph.determineShortestPath(2,0, 1);
-        Assert.assertArrayEquals(expResult.getNodeIds(), result.getNodeIds());
+        assertEquals(expResult, result);
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void testDetermineShortestPathWithParamsNegativeId() {
         Path result = graph.determineShortestPath(2,-187, 420);
-        assertNull(result);
     }
 
     @Test
@@ -70,16 +68,16 @@ public class GraphTest {
 
     @Test
     public void testDetermineMaximumFlow() {
-        double expResult = 2000;
+        double expResult = 500;
         double result = graph.determineMaximumFlow(0,2);
-        assertEquals(expResult, result);
+        assertEquals(expResult, result, 0.1);
     }
 
     @Test
     public void testDetermineBottlenecks() {
         List<Edge> expResult = new ArrayList<>();
-        expResult.add(new Edge(1, 2, 0));
+        expResult.add(new Edge(1, 2, 150));
         List<Edge> result = graph.determineBottlenecks(0,2);
-        assertArrayEquals(expResult.toArray(), result.toArray());
+        assertEquals(expResult, result);
     }
 }

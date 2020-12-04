@@ -14,7 +14,7 @@ public class PathTest {
     @BeforeClass
     public static void setUpClass() {
         graph = new Graph();
-        graph.read(new File("Linz_Suchproblem.csv"));
+        graph.read(new File("resources/Linz_Suchproblem.csv"));
     }
 
     @AfterClass
@@ -38,24 +38,24 @@ public class PathTest {
 
     @Test
     public void testComputeDistanceEasy() {
-        double expResult = 2000;
+        double expResult = 500;
         Path result = new Path(graph, 0, 1);
-        assertEquals(expResult, result.computeDistance());
+        assertEquals(expResult, result.computeDistance(), 0.1);
     }
 
     @Test
     public void testComputeDistanceMedium() {
-        double expResult = 3000;
+        double expResult = 650;
         Path result = new Path(graph, 0, 1, 2);
-        assertEquals(expResult, result.computeDistance());
+        assertEquals(expResult, result.computeDistance(), 0.1);
     }
 
     @Test
     public void testComputeDistanceHard() {
-        //Path: E - D - C - D - C - B - A
-        // 150 + 1000 + 1000 + 1000 + 1000 + 1000 + 2000
-        double expResult = 7150;
-        Path result = new Path(graph, 4, 3, 2, 3, 2, 1, 0);
-        assertEquals(expResult, result.computeDistance());
+        // Path: 5 -> 34 -> 3 -> 2 -> 1   --   ids incremented by one as in the linz.jpg plan
+        // 120 + 100 + 150 + 500 = 870
+        double expResult = 870;
+        Path result = new Path(graph, 4, 33, 2, 1, 0);
+        assertEquals(expResult, result.computeDistance(), 0.1);
     }
 }
