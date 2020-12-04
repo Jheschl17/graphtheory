@@ -60,6 +60,14 @@ public class Graph {
     }
 
     public Path determineShortestPath(int sourceNodeId, int targetNodeId) {
+        if (sourceNodeId < 0)
+            throw new IllegalArgumentException(
+                    "The sourceNodeId was negative. As node ids are always positive, this is not valid.");
+
+        if (targetNodeId < 0)
+            throw new IllegalArgumentException(
+                    "The targetNodeId was negative. As node ids are always positive, this is not valid.");
+
         List<SearchItem> lst = allNodeIds().stream()
                 .map(SearchItem::new)
                 .collect(Collectors.toList());
@@ -109,6 +117,18 @@ public class Graph {
     }
     
     public Path determineShortestPath(int sourceNodeId, int targetNodeId, int... viaNodeIds) {
+        if (sourceNodeId < 0)
+            throw new IllegalArgumentException(
+                    "The sourceNodeId was negative. As node ids are always positive, this is not valid.");
+
+        if (targetNodeId < 0)
+            throw new IllegalArgumentException(
+                    "The targetNodeId was negative. As node ids are always positive, this is not valid.");
+
+        if (Arrays.stream(viaNodeIds).anyMatch(nodeId -> nodeId < 0))
+            throw new IllegalArgumentException(
+                    "A viaNodeId was negative. As node ids are always positive, this is not valid.");
+
         // Initialize list with all node ids in order of traversal
         List<Integer> ids = new ArrayList<>();
         ids.add(sourceNodeId);
