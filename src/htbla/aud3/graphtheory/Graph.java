@@ -109,21 +109,52 @@ public class Graph {
     }
     
     public Path determineShortestPath(int sourceNodeId, int targetNodeId, int... viaNodeIds) {
-        List<Integer> list=(Arrays.stream(determineShortestPath(sourceNodeId, viaNodeIds[0]).getNodeIds()).boxed().collect(Collectors.toList()));
-        if(viaNodeIds.length>1) IntStream.range(0, viaNodeIds.length - 1).mapToObj(i -> Arrays.stream(determineShortestPath(viaNodeIds[i], viaNodeIds[i + 1]).getNodeIds()).boxed().collect(Collectors.toList())).forEach(list::addAll);
-        list.addAll(Arrays.stream(determineShortestPath(viaNodeIds[viaNodeIds.length-1],targetNodeId).getNodeIds()).boxed().collect(Collectors.toList()));
-        IntStream.range(0, list.size()).filter(i -> list.get(i) == list.get(i + 1)).forEach(list::remove);
-        return new Path(this, list.stream().mapToInt(i->i).toArray());
+        // Initialize list with all node ids in order of traversal
+        List<Integer> ids = new ArrayList<>();
+        ids.add(sourceNodeId);
+        ids.addAll(IntStream.of(viaNodeIds)
+            .boxed()
+            .collect(Collectors.toList()));
+        ids.add(targetNodeId);
+
+        // Calculate sub-paths
+        List<Path> subPaths = new ArrayList<>();
+        for (int i = 0; i < ids.size() - 1; i++) {
+            int subPathFrom = ids.get(i);
+            int subPathTo = ids.get(i + 1);
+            subPaths.add(
+                determineShortestPath(subPathFrom, subPathTo)
+            );
+        }
+
+        // Merge sub-paths to total path
+        List<Integer> totalPathIds = new ArrayList<>();
+        totalPathIds.add(sourceNodeId);
+        for (Path subPath : subPaths) {
+            totalPathIds.addAll(
+                Arrays.stream(subPath.getNodeIds())
+                    .skip(1)
+                    .boxed()
+                    .collect(Collectors.toList())
+            );
+        }
+
+        int[] totalPathIdsArray = totalPathIds.stream()
+                .mapToInt(Integer::intValue)
+                .toArray();
+        return new Path(this, totalPathIdsArray);
     }
+
     //Annahme: Maximumflow ist die Edge mit der größten Gewichtung
     public double determineMaximumFlow(int sourceNodeId, int targetNodeId) {
-        List<Edge> edgeList=determineShortestPath(sourceNodeId, targetNodeId).getEdges();
+        List<Edge> edgeList = determineShortestPath(sourceNodeId, targetNodeId).getEdges();
         edgeList.sort(Comparator.comparingInt(Edge::getWeight));
         return edgeList.get(0).getWeight();
     }
+
     //Annahme: Das sind alle Edges die eine kleinere Gewichtung haben als maximum
     public List<Edge> determineBottlenecks(int sourceNodeId, int targetNodeId) {
-        List<Edge> edgeList=determineShortestPath(sourceNodeId, targetNodeId).getEdges();
+        List<Edge> edgeList = determineShortestPath(sourceNodeId, targetNodeId).getEdges();
         edgeList.sort(Comparator.comparingInt(Edge::getWeight));
         return edgeList.stream().filter(x -> x.getWeight()<determineMaximumFlow(sourceNodeId, targetNodeId)).collect(Collectors.toList());
     }
