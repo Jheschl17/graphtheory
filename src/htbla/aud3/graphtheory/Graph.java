@@ -21,7 +21,8 @@ public class Graph {
                 for (int weightIndex = 0; weightIndex < lines.get(lineIndex).split(";").length; weightIndex++) {
                     int weight = Integer.parseInt(lines.get(lineIndex).split(";")[weightIndex]);
                     if (weight != 0) {
-                        Edge edge = new Edge(lineIndex, weightIndex, weight);
+                        // Add 1 to lineIndex and weightIndex to make node indexes start at 1 instead of 0
+                        Edge edge = new Edge(lineIndex + 1, weightIndex + 1, weight);
                         edges.add(edge);
                     }
                 }

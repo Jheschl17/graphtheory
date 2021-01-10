@@ -35,20 +35,20 @@ public class GraphTest {
 
     @Test
     public void testDetermineShortestPathEasy() {
-        Path expResult = new Path(graph, 0, 1);
-        Path result = graph.determineShortestPath(0, 1);
+        Path expResult = new Path(graph, 1, 2);
+        Path result = graph.determineShortestPath(1, 2);
         Assert.assertArrayEquals(expResult.getNodeIds(), result.getNodeIds());
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testDetermineShortestPathNegativeId() {
-        Path result = graph.determineShortestPath(0, -69);
+        Path result = graph.determineShortestPath(1, -69);
     }
 
     @Test
     public void testDetermineShortestPathWithParamsExists() {
-        Path expResult = new Path(graph, 2, 1, 0);
-        Path result = graph.determineShortestPath(2,0, 1);
+        Path expResult = new Path(graph, 3, 2, 1);
+        Path result = graph.determineShortestPath(3,1, 2);
         assertEquals(expResult, result);
     }
 
@@ -69,15 +69,15 @@ public class GraphTest {
     @Test
     public void testDetermineMaximumFlow() {
         double expResult = 500;
-        double result = graph.determineMaximumFlow(0,2);
+        double result = graph.determineMaximumFlow(1,3);
         assertEquals(expResult, result, 0.1);
     }
 
     @Test
     public void testDetermineBottlenecks() {
         List<Edge> expResult = new ArrayList<>();
-        expResult.add(new Edge(1, 2, 150));
-        List<Edge> result = graph.determineBottlenecks(0,2);
+        expResult.add(new Edge(2, 3, 150));
+        List<Edge> result = graph.determineBottlenecks(1,3);
         assertEquals(expResult, result);
     }
 }
