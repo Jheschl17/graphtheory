@@ -2,7 +2,7 @@ package htbla.aud3.graphtheory;
 
 import java.util.Objects;
 
-/*
+/**
  * @author Jonas Heschl, Jakob Jodlbauer, Emil Maximilian Hoani Eichsteininger
  */
 public class Edge {
