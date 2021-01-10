@@ -17,11 +17,11 @@ public class Edge {
         this.weight = weight;
     }
 
-    public int getFromNodeId() {
+    public int getFirstNodeId() {
         return from;
     }
     
-    public int getToNodeId() {
+    public int getSecondNodeId() {
         return to;
     }
 
@@ -40,5 +40,14 @@ public class Edge {
     @Override
     public int hashCode() {
         return Objects.hash(from, to, weight);
+    }
+
+    @Override
+    public String toString() {
+        return "Edge{" +
+                "from=" + from +
+                ", to=" + to +
+                ", weight=" + weight +
+                '}';
     }
 }

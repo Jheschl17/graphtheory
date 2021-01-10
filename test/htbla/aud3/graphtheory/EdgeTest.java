@@ -28,13 +28,13 @@ public class EdgeTest {
     public void testGetFirstNodeId() {
         int expResult = 0;
         Edge e = new Edge(0,1, 1000);
-        assertEquals(expResult, e.getFromNodeId());
+        assertEquals(expResult, e.getFirstNodeId());
     }
 
     @Test
     public void testGetSecondNodeId() {
         int expResult = 1;
         Edge e = new Edge(0,1, 1000);
-        assertEquals(expResult, e.getToNodeId());
+        assertEquals(expResult, e.getSecondNodeId());
     }
 }

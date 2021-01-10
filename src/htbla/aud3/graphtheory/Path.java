@@ -37,7 +37,7 @@ public class Path {
             int from = nodeIds[i];
             int to = nodeIds[i+1];
             for (Edge e : graph.edges) {
-                if(e.getFromNodeId() == from && e.getToNodeId() == to) {
+                if(e.getFirstNodeId() == from && e.getSecondNodeId() == to) {
                     toReturn.add(e);
                     break;
                 }

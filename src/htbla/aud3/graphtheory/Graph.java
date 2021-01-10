@@ -84,7 +84,7 @@ public class Graph {
         while (pq.size() > 0) {
             SearchItem cur = pq.remove();
             for (Edge edge : edgesFrom(cur.id)) {
-                SearchItem si = map.get(edge.getToNodeId());
+                SearchItem si = map.get(edge.getSecondNodeId());
 
                 int alt = cur.distance + weight(cur.id, si.id);
                 if (alt < si.distance) {
@@ -186,7 +186,7 @@ public class Graph {
 
     public int weight(int idFrom, int idTo) {
         return edges.stream()
-                .filter(edge -> edge.getFromNodeId() == idFrom && edge.getToNodeId() == idTo)
+                .filter(edge -> edge.getFirstNodeId() == idFrom && edge.getSecondNodeId() == idTo)
                 .findFirst()
                 .orElseThrow(
                         () -> new IllegalArgumentException("No edge exists with idFrom=" + idFrom + " and idTo=" + idTo))
@@ -200,8 +200,8 @@ public class Graph {
     public List<Integer> allNodeIds() {
         return edges.stream()
                 .map(edge -> new ArrayList<>(Arrays.asList(
-                        edge.getFromNodeId(),
-                        edge.getToNodeId()
+                        edge.getFirstNodeId(),
+                        edge.getSecondNodeId()
                 )))
                 .flatMap(list -> list.stream())
                 .distinct()
@@ -216,7 +216,7 @@ public class Graph {
      */
     public List<Edge> edgesFrom(int fromNodeId) {
         return edges.stream()
-                .filter(edge -> edge.getFromNodeId() == fromNodeId)
+                .filter(edge -> edge.getFirstNodeId() == fromNodeId)
                 .collect(Collectors.toList());
     }
 
