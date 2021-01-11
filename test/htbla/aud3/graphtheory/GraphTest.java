@@ -66,18 +66,4 @@ public class GraphTest {
         }
     }
 
-    @Test
-    public void testDetermineMaximumFlow() {
-        double expResult = 500;
-        double result = graph.determineMaximumFlow(1,3);
-        assertEquals(expResult, result, 0.1);
-    }
-
-    @Test
-    public void testDetermineBottlenecks() {
-        List<Edge> expResult = new ArrayList<>();
-        expResult.add(new Edge(2, 3, 150));
-        List<Edge> result = graph.determineBottlenecks(1,3);
-        assertEquals(expResult, result);
-    }
 }
