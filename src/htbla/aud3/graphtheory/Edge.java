@@ -29,6 +29,14 @@ public class Edge {
         return weight;
     }
 
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
+
+    public void addWeight(int weight) {
+        this.weight += weight;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
