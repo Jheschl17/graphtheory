@@ -83,7 +83,12 @@ public class Graph {
         }
 
         // Retrieve path from data structure
-        return retrievePath(map, targetNodeId, this);
+        // If retrievePath throws an exception there is no path
+        try {
+            return retrievePath(map, targetNodeId, this);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public Path determineShortestPath(int sourceNodeId, int targetNodeId, int... viaNodeIds) {
@@ -112,9 +117,12 @@ public class Graph {
         for (int i = 0; i < ids.size() - 1; i++) {
             int subPathFrom = ids.get(i);
             int subPathTo = ids.get(i + 1);
-            subPaths.add(
-                determineShortestPath(subPathFrom, subPathTo)
-            );
+            Path subPath = determineShortestPath(subPathFrom, subPathTo);
+            // If any of the sub paths are null, no path exists between the given nodes. Thus return null.
+            if (subPath == null)
+                return null;
+
+            subPaths.add(subPath);
         }
 
         // Merge sub-paths to total path
