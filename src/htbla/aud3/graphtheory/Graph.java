@@ -173,6 +173,10 @@ public class Graph {
     public List<Edge> determineBottlenecks(int sourceNodeId, int targetNodeId) {
         List<Edge> flowDiagram = computeFlowDiagramWrapper(edges, sourceNodeId, targetNodeId);
 
+        // If no path exists between the given nodes, there are no bottlenecks. Thus return an empty list of Edges.
+        if (determineShortestPath(sourceNodeId, targetNodeId) == null)
+            new ArrayList<Edge>();
+
         return flowDiagram.stream()
                 .filter(flowEdge -> {
                     // Get regular graph edge corresponding to current edge in the computed flowDiagram
