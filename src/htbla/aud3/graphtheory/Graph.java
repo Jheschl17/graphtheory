@@ -160,6 +160,10 @@ public class Graph {
     public double determineMaximumFlow(int sourceNodeId, int targetNodeId) {
         List<Edge> flowDiagram = computeFlowDiagramWrapper(edges, sourceNodeId, targetNodeId);
 
+        // If no path exists between the given nodes, the maximum flow is 0
+        if (determineShortestPath(sourceNodeId, targetNodeId) == null)
+            return 0;
+
         return flowDiagram.stream()
                 .filter(edge -> edge.getSecondNodeId() == targetNodeId)
                 .mapToInt(Edge::getWeight)
