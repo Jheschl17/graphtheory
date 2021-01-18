@@ -229,6 +229,8 @@ public class Graph {
         // leading from the previous edge's destination have transported as much flow as they are capable of transporting
         // (edges can transport a max amount of flow according to their weight in the variable edges).
         while (previousFlowAmount > 0) {
+            // Bug: Not the shortest path (minimum sum of all weights) but the path with the lowest minimum capacity is
+            // required here
             Path path = determineShortestPath(flowDiagram, sourceNodeId, targetNodeId);
             Edge nextStep = path.getEdges().get(0);
             Edge nextStepEdges = findEdge(edges, nextStep.getFirstNodeId(), nextStep.getSecondNodeId());
