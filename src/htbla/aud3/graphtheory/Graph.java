@@ -158,11 +158,11 @@ public class Graph {
 
     // region flow
     public double determineMaximumFlow(int sourceNodeId, int targetNodeId) {
-        List<Edge> flowDiagram = computeFlowDiagramWrapper(edges, sourceNodeId, targetNodeId);
-
         // If no path exists between the given nodes, the maximum flow is 0
         if (determineShortestPath(sourceNodeId, targetNodeId) == null)
             return 0;
+
+        List<Edge> flowDiagram = computeFlowDiagramWrapper(edges, sourceNodeId, targetNodeId);
 
         return flowDiagram.stream()
                 .filter(edge -> edge.getSecondNodeId() == targetNodeId)
@@ -171,11 +171,11 @@ public class Graph {
     }
 
     public List<Edge> determineBottlenecks(int sourceNodeId, int targetNodeId) {
-        List<Edge> flowDiagram = computeFlowDiagramWrapper(edges, sourceNodeId, targetNodeId);
-
         // If no path exists between the given nodes, there are no bottlenecks. Thus return an empty list of Edges.
         if (determineShortestPath(sourceNodeId, targetNodeId) == null)
-            new ArrayList<Edge>();
+            return new ArrayList<Edge>();
+
+        List<Edge> flowDiagram = computeFlowDiagramWrapper(edges, sourceNodeId, targetNodeId);
 
         return flowDiagram.stream()
                 .filter(flowEdge -> {
